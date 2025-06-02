@@ -26,32 +26,35 @@ function Router() {
     );
   }
 
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <Switch>
+          <Route path="/" component={Landing} />
+          <Route path="/about" component={About} />
+          <Route path="/services" component={Services} />
+          <Route path="/contact" component={Contact} />
+          <Route component={NotFound} />
+        </Switch>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
+      <Navigation />
       <Switch>
-        {!isAuthenticated ? (
-          <>
-            <Route path="/" component={Landing} />
-            <Route path="/about" component={About} />
-            <Route path="/services" component={Services} />
-            <Route path="/contact" component={Contact} />
-          </>
-        ) : (
-          <>
-            <Navigation />
-            <Route path="/" component={Home} />
-            <Route path="/about" component={About} />
-            <Route path="/services" component={Services} />
-            <Route path="/contact" component={Contact} />
-            <Route path="/patient-portal" component={PatientPortal} />
-            {user?.role === 'doctor' || user?.role === 'admin' ? (
-              <Route path="/clinic-dashboard" component={ClinicDashboard} />
-            ) : null}
-            <Footer />
-          </>
-        )}
+        <Route path="/" component={Home} />
+        <Route path="/about" component={About} />
+        <Route path="/services" component={Services} />
+        <Route path="/contact" component={Contact} />
+        <Route path="/patient-portal" component={PatientPortal} />
+        {(user as any)?.role === 'doctor' || (user as any)?.role === 'admin' ? (
+          <Route path="/clinic-dashboard" component={ClinicDashboard} />
+        ) : null}
         <Route component={NotFound} />
       </Switch>
+      <Footer />
     </div>
   );
 }
