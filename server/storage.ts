@@ -55,6 +55,11 @@ export interface IStorage {
   // Availability operations
   getDoctorAvailability(doctorId: string): Promise<Availability[]>;
   createAvailability(availability: InsertAvailability): Promise<Availability>;
+  
+  // Medical records operations
+  getPatientMedicalRecords(patientId: number): Promise<MedicalRecord[]>;
+  createMedicalRecord(record: InsertMedicalRecord): Promise<MedicalRecord>;
+  updateMedicalRecord(id: number, record: Partial<InsertMedicalRecord>): Promise<MedicalRecord>;
 }
 
 export class DatabaseStorage implements IStorage {

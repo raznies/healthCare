@@ -49,6 +49,11 @@ export const patients = pgTable("patients", {
   emergencyContact: varchar("emergency_contact"),
   medicalHistory: text("medical_history"),
   allergies: text("allergies"),
+  currentMedications: text("current_medications"),
+  bloodType: varchar("blood_type"),
+  insuranceProvider: varchar("insurance_provider"),
+  insurancePolicyNumber: varchar("insurance_policy_number"),
+  preferredLanguage: varchar("preferred_language").default("English"),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
@@ -86,6 +91,22 @@ export const blockedSlots = pgTable("blocked_slots", {
   endTime: time("end_time").notNull(),
   reason: varchar("reason"), // "Meeting", "Break", etc.
   createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Medical records for detailed treatment history
+export const medicalRecords = pgTable("medical_records", {
+  id: serial("id").primaryKey(),
+  patientId: integer("patient_id").references(() => patients.id),
+  appointmentId: integer("appointment_id").references(() => appointments.id),
+  diagnosis: text("diagnosis"),
+  treatment: text("treatment"),
+  prescription: text("prescription"),
+  notes: text("notes"),
+  followUpRequired: boolean("follow_up_required").default(false),
+  followUpDate: date("follow_up_date"),
+  attachments: text("attachments").array(), // URLs to uploaded files
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
 });
 
 // Appointments table
@@ -132,13 +153,14 @@ export const patientsRelations = relations(patients, ({ one, many }) => ({
     references: [users.id],
   }),
   appointments: many(appointments),
+  medicalRecords: many(medicalRecords),
 }));
 
 export const servicesRelations = relations(services, ({ many }) => ({
   appointments: many(appointments),
 }));
 
-export const appointmentsRelations = relations(appointments, ({ one }) => ({
+export const appointmentsRelations = relations(appointments, ({ one, many }) => ({
   patient: one(patients, {
     fields: [appointments.patientId],
     references: [patients.id],
@@ -151,6 +173,7 @@ export const appointmentsRelations = relations(appointments, ({ one }) => ({
     fields: [appointments.doctorId],
     references: [users.id],
   }),
+  medicalRecord: one(medicalRecords),
 }));
 
 export const availabilityRelations = relations(availability, ({ one }) => ({
@@ -164,6 +187,17 @@ export const blockedSlotsRelations = relations(blockedSlots, ({ one }) => ({
   doctor: one(users, {
     fields: [blockedSlots.doctorId],
     references: [users.id],
+  }),
+}));
+
+export const medicalRecordsRelations = relations(medicalRecords, ({ one }) => ({
+  patient: one(patients, {
+    fields: [medicalRecords.patientId],
+    references: [patients.id],
+  }),
+  appointment: one(appointments, {
+    fields: [medicalRecords.appointmentId],
+    references: [appointments.id],
   }),
 }));
 
@@ -205,6 +239,12 @@ export const insertBlockedSlotSchema = createInsertSchema(blockedSlots).omit({
   createdAt: true,
 });
 
+export const insertMedicalRecordSchema = createInsertSchema(medicalRecords).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
 // Export types
 export type UpsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
@@ -220,3 +260,5 @@ export type InsertAvailability = z.infer<typeof insertAvailabilitySchema>;
 export type Availability = typeof availability.$inferSelect;
 export type InsertBlockedSlot = z.infer<typeof insertBlockedSlotSchema>;
 export type BlockedSlot = typeof blockedSlots.$inferSelect;
+export type InsertMedicalRecord = z.infer<typeof insertMedicalRecordSchema>;
+export type MedicalRecord = typeof medicalRecords.$inferSelect;
