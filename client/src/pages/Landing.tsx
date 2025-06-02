@@ -24,7 +24,7 @@ export default function Landing() {
               <Link href="/services" className="text-gray-700 hover:text-primary font-medium transition-colors">Services</Link>
               <Link href="/contact" className="text-gray-700 hover:text-primary font-medium transition-colors">Contact</Link>
               <Button asChild>
-                <a href="/api/login">Patient Login</a>
+                <a href="/api/login">Login</a>
               </Button>
             </div>
           </div>

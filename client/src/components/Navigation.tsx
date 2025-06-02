@@ -17,9 +17,10 @@ export default function Navigation() {
     { href: "/patient-portal", label: "Patient Portal" },
   ];
 
-  // Add clinic dashboard for doctors/admins
-  if (user?.role === 'doctor' || user?.role === 'admin') {
+  // Add clinic dashboard and analytics for doctors/admins
+  if ((user as any)?.role === 'doctor' || (user as any)?.role === 'admin') {
     navItems.push({ href: "/clinic-dashboard", label: "Dashboard" });
+    navItems.push({ href: "/analytics", label: "Analytics" });
   }
 
   return (
