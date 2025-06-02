@@ -11,6 +11,7 @@ import Services from "@/pages/Services";
 import Contact from "@/pages/Contact";
 import PatientPortal from "@/pages/PatientPortal";
 import ClinicDashboard from "@/pages/ClinicDashboard";
+import Analytics from "@/pages/Analytics";
 import NotFound from "@/pages/not-found";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -50,7 +51,10 @@ function Router() {
         <Route path="/contact" component={Contact} />
         <Route path="/patient-portal" component={PatientPortal} />
         {(user as any)?.role === 'doctor' || (user as any)?.role === 'admin' ? (
-          <Route path="/clinic-dashboard" component={ClinicDashboard} />
+          <>
+            <Route path="/clinic-dashboard" component={ClinicDashboard} />
+            <Route path="/analytics" component={Analytics} />
+          </>
         ) : null}
         <Route component={NotFound} />
       </Switch>

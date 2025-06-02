@@ -212,6 +212,124 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Analytics routes
+  app.get('/api/analytics', isAuthenticated, async (req, res) => {
+    try {
+      const appointments = await storage.getAppointments();
+      const services = await storage.getServices();
+      
+      // Calculate overview metrics
+      const totalAppointments = appointments.length;
+      const completedAppointments = appointments.filter(apt => apt.status === 'completed').length;
+      const cancelledAppointments = appointments.filter(apt => apt.status === 'cancelled').length;
+      const completionRate = totalAppointments > 0 ? Math.round((completedAppointments / totalAppointments) * 100) : 0;
+      const cancellationRate = totalAppointments > 0 ? Math.round((cancelledAppointments / totalAppointments) * 100) : 0;
+      
+      // Calculate revenue
+      const totalRevenue = appointments
+        .filter(apt => apt.status === 'completed')
+        .reduce((sum, apt) => {
+          const service = services.find(s => s.id === apt.serviceId);
+          return sum + (service ? parseFloat(service.price) : 0);
+        }, 0);
+
+      // Service statistics
+      const serviceStats = services.map(service => {
+        const serviceAppointments = appointments.filter(apt => apt.serviceId === service.id);
+        const serviceRevenue = serviceAppointments
+          .filter(apt => apt.status === 'completed')
+          .length * parseFloat(service.price);
+        
+        return {
+          serviceName: service.name,
+          bookingCount: serviceAppointments.length,
+          revenue: serviceRevenue,
+          averageDuration: service.duration
+        };
+      });
+
+      // Monthly stats (last 6 months)
+      const monthlyStats = [];
+      const now = new Date();
+      for (let i = 5; i >= 0; i--) {
+        const date = new Date(now.getFullYear(), now.getMonth() - i, 1);
+        const monthName = date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+        const monthAppointments = appointments.filter(apt => {
+          const aptDate = new Date(apt.appointmentDate);
+          return aptDate.getMonth() === date.getMonth() && aptDate.getFullYear() === date.getFullYear();
+        });
+        
+        const monthRevenue = monthAppointments
+          .filter(apt => apt.status === 'completed')
+          .reduce((sum, apt) => {
+            const service = services.find(s => s.id === apt.serviceId);
+            return sum + (service ? parseFloat(service.price) : 0);
+          }, 0);
+
+        monthlyStats.push({
+          month: monthName,
+          appointments: monthAppointments.length,
+          revenue: monthRevenue,
+          newPatients: monthAppointments.length
+        });
+      }
+
+      // Appointment status breakdown
+      const appointmentStatusBreakdown = {
+        scheduled: appointments.filter(apt => apt.status === 'scheduled').length,
+        confirmed: appointments.filter(apt => apt.status === 'confirmed').length,
+        completed: completedAppointments,
+        cancelled: cancelledAppointments
+      };
+
+      const analyticsData = {
+        overview: {
+          totalAppointments,
+          totalPatients: appointments.length,
+          totalRevenue,
+          averageAppointmentDuration: services.reduce((sum, s) => sum + s.duration, 0) / services.length || 0,
+          completionRate,
+          cancellationRate
+        },
+        monthlyStats,
+        serviceStats,
+        appointmentStatusBreakdown
+      };
+
+      res.json(analyticsData);
+    } catch (error) {
+      console.error("Error fetching analytics:", error);
+      res.status(500).json({ message: "Failed to fetch analytics" });
+    }
+  });
+
+  // Medical records routes
+  app.get('/api/patients/:patientId/medical-records', isAuthenticated, async (req, res) => {
+    try {
+      const { patientId } = req.params;
+      const records = await storage.getPatientMedicalRecords(parseInt(patientId));
+      res.json(records);
+    } catch (error) {
+      console.error("Error fetching medical records:", error);
+      res.status(500).json({ message: "Failed to fetch medical records" });
+    }
+  });
+
+  app.post('/api/medical-records', isAuthenticated, async (req, res) => {
+    try {
+      const recordData = insertMedicalRecordSchema.parse(req.body);
+      const record = await storage.createMedicalRecord(recordData);
+      res.status(201).json(record);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        res.status(400).json({ message: "Invalid medical record data", errors: error.errors });
+      } else {
+        console.error("Error creating medical record:", error);
+        res.status(500).json({ message: "Failed to create medical record" });
+      }
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
