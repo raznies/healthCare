@@ -2,6 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { setupAuth, isAuthenticated } from "./replitAuth";
+import { sendAppointmentConfirmation } from "./emailService";
 import { insertAppointmentSchema, insertContactMessageSchema, insertPatientSchema } from "@shared/schema";
 import { z } from "zod";
 
@@ -81,6 +82,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
         status: 'scheduled',
         doctorId: defaultDoctorId
       });
+
+      // Send email confirmation
+      try {
+        const patient = appointment.patientId ? await storage.getPatient(appointment.patientId) : null;
+        const user = patient?.userId ? await storage.getUser(patient.userId) : null;
+        const service = appointment.serviceId ? await storage.getService(appointment.serviceId) : null;
+
+        if (patient && user && service && user.email) {
+          await sendAppointmentConfirmation({
+            appointment,
+            patient,
+            user,
+            service
+          });
+        }
+      } catch (emailError) {
+        console.error('Email sending failed:', emailError);
+        // Don't fail the appointment creation if email fails
+      }
+
       res.status(201).json(appointment);
     } catch (error) {
       if (error instanceof z.ZodError) {

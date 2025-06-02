@@ -71,7 +71,20 @@ export const availability = pgTable("availability", {
   dayOfWeek: integer("day_of_week").notNull(), // 0-6 (Sunday-Saturday)
   startTime: time("start_time").notNull(),
   endTime: time("end_time").notNull(),
+  slotDuration: integer("slot_duration").default(30), // minutes per slot
+  breakTime: integer("break_time").default(0), // break between slots in minutes
   isActive: boolean("is_active").default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Blocked time slots for specific dates
+export const blockedSlots = pgTable("blocked_slots", {
+  id: serial("id").primaryKey(),
+  doctorId: varchar("doctor_id").notNull().references(() => users.id),
+  date: date("date").notNull(),
+  startTime: time("start_time").notNull(),
+  endTime: time("end_time").notNull(),
+  reason: varchar("reason"), // "Meeting", "Break", etc.
   createdAt: timestamp("created_at").defaultNow(),
 });
 
@@ -110,6 +123,7 @@ export const usersRelations = relations(users, ({ many }) => ({
   patients: many(patients),
   appointments: many(appointments),
   availability: many(availability),
+  blockedSlots: many(blockedSlots),
 }));
 
 export const patientsRelations = relations(patients, ({ one, many }) => ({
