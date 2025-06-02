@@ -1,0 +1,293 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Healthcare Professional Color Scheme */
+  --background: 0 0% 100%; /* Pure white for clean medical aesthetic */
+  --foreground: 224 14% 16%; /* Dark navy for professional text */
+  --muted: 210 11% 98%; /* Very light blue-gray for subtle backgrounds */
+  --muted-foreground: 215 16% 47%; /* Medium gray-blue for secondary text */
+  --popover: 0 0% 100%; /* White for clean popover backgrounds */
+  --popover-foreground: 224 14% 16%; /* Dark navy for popover text */
+  --card: 0 0% 100%; /* White cards for clean appearance */
+  --card-foreground: 224 14% 16%; /* Dark navy for card text */
+  --border: 214 13% 91%; /* Light blue-gray borders */
+  --input: 214 13% 91%; /* Light blue-gray input borders */
+  --primary: 217 91% 60%; /* Professional medical blue #3b82f6 */
+  --primary-foreground: 0 0% 100%; /* White text on primary */
+  --secondary: 210 11% 98%; /* Very light blue-gray for secondary elements */
+  --secondary-foreground: 215 25% 27%; /* Dark blue-gray for secondary text */
+  --accent: 210 11% 98%; /* Light accent matching secondary */
+  --accent-foreground: 215 25% 27%; /* Dark accent text */
+  --destructive: 0 84% 60%; /* Medical red for alerts/errors */
+  --destructive-foreground: 0 0% 98%; /* White text on destructive */
+  --ring: 217 91% 60%; /* Primary blue for focus rings */
+  --radius: 0.5rem; /* Rounded corners for modern look */
+  
+  /* Healthcare-specific color variables */
+  --medical-blue: 217 91% 60%; /* #3b82f6 - Primary medical blue */
+  --medical-green: 158 64% 52%; /* #10b981 - Success/health green */
+  --medical-gray: 215 16% 47%; /* #64748b - Professional gray */
+  --clinic-bg: 210 11% 98%; /* #f5f7fa - Clean clinic background */
+  --appointment-blue: 213 94% 68%; /* #4f46e5 - Appointment highlight */
+  --emergency-red: 0 84% 60%; /* #dc2626 - Emergency/urgent */
+  --success-green: 142 71% 45%; /* #059669 - Success states */
+  --warning-yellow: 45 93% 47%; /* #d97706 - Warnings */
+}
+
+.dark {
+  /* Dark mode healthcare colors - professional dark theme */
+  --background: 224 71% 4%; /* Very dark navy for professional dark mode */
+  --foreground: 213 31% 91%; /* Light blue-white for dark mode text */
+  --muted: 223 47% 11%; /* Dark blue-gray for muted backgrounds */
+  --muted-foreground: 215 20% 65%; /* Light gray-blue for muted text */
+  --popover: 224 71% 4%; /* Dark navy for popovers */
+  --popover-foreground: 213 31% 91%; /* Light text on dark popovers */
+  --card: 224 71% 4%; /* Dark navy cards */
+  --card-foreground: 213 31% 91%; /* Light text on dark cards */
+  --border: 216 34% 17%; /* Dark blue-gray borders */
+  --input: 216 34% 17%; /* Dark input borders */
+  --primary: 217 91% 60%; /* Same medical blue for consistency */
+  --primary-foreground: 222 84% 5%; /* Very dark text on primary */
+  --secondary: 222 47% 11%; /* Dark secondary background */
+  --secondary-foreground: 213 31% 91%; /* Light secondary text */
+  --accent: 216 34% 17%; /* Dark accent */
+  --accent-foreground: 213 31% 91%; /* Light accent text */
+  --destructive: 0 63% 31%; /* Darker destructive for dark mode */
+  --destructive-foreground: 213 31% 91%; /* Light text on destructive */
+  --ring: 217 91% 60%; /* Same primary blue for focus */
+  --radius: 0.5rem;
+  
+  /* Dark mode medical colors */
+  --medical-blue: 217 91% 60%; /* Consistent medical blue */
+  --medical-green: 158 64% 52%; /* Consistent medical green */
+  --medical-gray: 215 20% 65%; /* Lighter gray for dark mode */
+  --clinic-bg: 223 47% 11%; /* Dark clinic background */
+  --appointment-blue: 213 94% 68%; /* Bright appointment blue */
+  --emergency-red: 0 84% 60%; /* Consistent emergency red */
+  --success-green: 142 71% 45%; /* Consistent success green */
+  --warning-yellow: 45 93% 47%; /* Consistent warning yellow */
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  }
+
+  /* Healthcare-specific typography */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold leading-tight;
+    color: hsl(var(--foreground));
+  }
+
+  /* Medical professional styling */
+  .medical-card {
+    @apply bg-white rounded-lg shadow-sm border border-gray-200 p-6;
+    background-color: hsl(var(--card));
+    border-color: hsl(var(--border));
+  }
+
+  .appointment-card {
+    @apply bg-blue-50 border-l-4 border-l-blue-500 p-4 rounded-r-lg;
+    background-color: hsl(var(--primary) / 0.05);
+    border-left-color: hsl(var(--primary));
+  }
+
+  .clinic-header {
+    @apply bg-gradient-to-br from-blue-50 to-blue-100 py-20;
+    background: linear-gradient(to bottom right, hsl(var(--primary) / 0.05), hsl(var(--primary) / 0.1));
+  }
+
+  /* Professional button styling */
+  .btn-medical {
+    @apply bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-3 rounded-lg transition-colors;
+    background-color: hsl(var(--primary));
+  }
+
+  .btn-medical:hover {
+    background-color: hsl(var(--primary) / 0.9);
+  }
+
+  /* Emergency/urgent styling */
+  .emergency-alert {
+    @apply bg-red-50 border border-red-200 text-red-800 p-4 rounded-lg;
+    background-color: hsl(var(--destructive) / 0.05);
+    border-color: hsl(var(--destructive) / 0.2);
+    color: hsl(var(--destructive));
+  }
+
+  /* Success/completion styling */
+  .success-badge {
+    @apply bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium;
+    background-color: hsl(var(--success-green) / 0.1);
+    color: hsl(var(--success-green));
+  }
+
+  /* Professional form styling */
+  .medical-form input,
+  .medical-form select,
+  .medical-form textarea {
+    @apply border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors;
+    border-color: hsl(var(--border));
+  }
+
+  .medical-form input:focus,
+  .medical-form select:focus,
+  .medical-form textarea:focus {
+    border-color: hsl(var(--primary));
+    box-shadow: 0 0 0 2px hsl(var(--primary) / 0.2);
+  }
+
+  /* Navigation styling */
+  .nav-link {
+    @apply font-medium transition-colors duration-200;
+  }
+
+  .nav-link:hover {
+    color: hsl(var(--primary));
+  }
+
+  .nav-link.active {
+    color: hsl(var(--primary));
+    font-weight: 600;
+  }
+
+  /* Healthcare-specific spacing and layout */
+  .clinic-section {
+    @apply py-16;
+  }
+
+  .clinic-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Patient portal styling */
+  .patient-portal {
+    @apply bg-gray-50 min-h-screen;
+    background-color: hsl(var(--clinic-bg));
+  }
+
+  /* Dashboard styling */
+  .dashboard-stat {
+    @apply bg-white p-6 rounded-xl shadow-sm border border-gray-200;
+    background-color: hsl(var(--card));
+    border-color: hsl(var(--border));
+  }
+
+  /* Appointment status colors */
+  .status-scheduled {
+    @apply bg-yellow-100 text-yellow-800;
+    background-color: hsl(var(--warning-yellow) / 0.1);
+    color: hsl(var(--warning-yellow));
+  }
+
+  .status-confirmed {
+    @apply bg-blue-100 text-blue-800;
+    background-color: hsl(var(--primary) / 0.1);
+    color: hsl(var(--primary));
+  }
+
+  .status-completed {
+    @apply bg-green-100 text-green-800;
+    background-color: hsl(var(--success-green) / 0.1);
+    color: hsl(var(--success-green));
+  }
+
+  .status-cancelled {
+    @apply bg-red-100 text-red-800;
+    background-color: hsl(var(--destructive) / 0.1);
+    color: hsl(var(--destructive));
+  }
+
+  /* Accessibility improvements */
+  .focus-visible {
+    @apply outline-2 outline-offset-2;
+    outline-color: hsl(var(--primary));
+  }
+
+  /* Loading states */
+  .loading-spinner {
+    @apply animate-spin rounded-full border-b-2;
+    border-color: hsl(var(--primary));
+  }
+
+  /* Professional shadows */
+  .medical-shadow {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+
+  .medical-shadow-lg {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+
+  /* Responsive design helpers */
+  @media (max-width: 768px) {
+    .clinic-container {
+      @apply px-4;
+    }
+    
+    .medical-card {
+      @apply p-4;
+    }
+  }
+
+  /* Print styles for medical records */
+  @media print {
+    .no-print {
+      display: none !important;
+    }
+    
+    .medical-card {
+      @apply shadow-none border border-gray-300;
+      break-inside: avoid;
+    }
+  }
+}
+
+/* Custom scrollbar for better UX */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground) / 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground) / 0.5);
+}
+
+/* Selection styling */
+::selection {
+  background-color: hsl(var(--primary) / 0.2);
+  color: hsl(var(--foreground));
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Reduced motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  html {
+    scroll-behavior: auto;
+  }
+}
