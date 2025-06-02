@@ -5,6 +5,7 @@ import {
   appointments,
   contactMessages,
   availability,
+  medicalRecords,
   type User,
   type UpsertUser,
   type InsertPatient,
@@ -17,6 +18,8 @@ import {
   type ContactMessage,
   type InsertAvailability,
   type Availability,
+  type MedicalRecord,
+  type InsertMedicalRecord,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, and, gte, desc, asc } from "drizzle-orm";
@@ -199,6 +202,32 @@ export class DatabaseStorage implements IStorage {
   async createAvailability(availabilityData: InsertAvailability): Promise<Availability> {
     const [avail] = await db.insert(availability).values(availabilityData).returning();
     return avail;
+  }
+
+  // Medical records operations
+  async getPatientMedicalRecords(patientId: number): Promise<MedicalRecord[]> {
+    return await db
+      .select()
+      .from(medicalRecords)
+      .where(eq(medicalRecords.patientId, patientId))
+      .orderBy(desc(medicalRecords.createdAt));
+  }
+
+  async createMedicalRecord(recordData: InsertMedicalRecord): Promise<MedicalRecord> {
+    const [record] = await db
+      .insert(medicalRecords)
+      .values(recordData)
+      .returning();
+    return record;
+  }
+
+  async updateMedicalRecord(id: number, recordData: Partial<InsertMedicalRecord>): Promise<MedicalRecord> {
+    const [record] = await db
+      .update(medicalRecords)
+      .set({ ...recordData, updatedAt: new Date() })
+      .where(eq(medicalRecords.id, id))
+      .returning();
+    return record;
   }
 }
 
