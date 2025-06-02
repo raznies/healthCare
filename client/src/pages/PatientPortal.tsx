@@ -12,6 +12,8 @@ import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { isUnauthorizedError } from "@/lib/authUtils";
 import BookingModal from "@/components/BookingModal";
+import { SidebarProvider, Sidebar, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarHeader, SidebarInput, SidebarInset } from "@/components/ui/sidebar";
+import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, BreadcrumbPage } from "@/components/ui/breadcrumb";
 
 interface Appointment {
   id: number;
@@ -184,195 +186,242 @@ export default function PatientPortal() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-        <Card className="shadow-xl">
-          <CardHeader className="bg-primary text-white rounded-t-lg">
-            <div className="text-center">
-              <CardTitle className="text-3xl mb-2">Patient Portal</CardTitle>
-              <p className="text-primary-100">Welcome back, {user?.firstName || "Patient"}!</p>
-            </div>
-          </CardHeader>
+    <SidebarProvider>
+      <Sidebar collapsible="offcanvas" variant="sidebar">
+        <SidebarHeader>
+          <span className="font-bold text-lg">Clinic Portal</span>
+        </SidebarHeader>
+        <SidebarInput placeholder="Search..." />
+        <SidebarContent>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild>
+                <a href="/clinic-dashboard">Dashboard</a>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild>
+                <a href="/appointments">Appointments</a>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild isActive={true}>
+                <a href="/patient-portal">Patients</a>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild>
+                <a href="/analytics">Analytics</a>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild>
+                <a href="/settings">Settings</a>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarContent>
+      </Sidebar>
+      <SidebarInset>
+        <div className="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/">Home</BreadcrumbLink>
+                <BreadcrumbSeparator />
+              </BreadcrumbItem>
+              <BreadcrumbItem>
+                <BreadcrumbPage>Patient Portal</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+          <Card className="shadow-xl">
+            <CardHeader className="bg-primary text-white rounded-t-lg">
+              <div className="text-center">
+                <CardTitle className="text-3xl mb-2">Patient Portal</CardTitle>
+                <p className="text-primary-100">Welcome back, {user?.firstName || "Patient"}!</p>
+              </div>
+            </CardHeader>
 
-          <CardContent className="p-8">
-            <Tabs defaultValue="appointments" className="w-full">
-              <TabsList className="grid w-full grid-cols-3 mb-8">
-                <TabsTrigger value="appointments" className="flex items-center gap-2">
-                  <Calendar className="h-4 w-4" />
-                  Appointments
-                </TabsTrigger>
-                <TabsTrigger value="profile" className="flex items-center gap-2">
-                  <User className="h-4 w-4" />
-                  Profile
-                </TabsTrigger>
-                <TabsTrigger value="history" className="flex items-center gap-2">
-                  <History className="h-4 w-4" />
-                  History
-                </TabsTrigger>
-              </TabsList>
+            <CardContent className="p-8">
+              <Tabs defaultValue="appointments" className="w-full">
+                <TabsList className="grid w-full grid-cols-3 mb-8">
+                  <TabsTrigger value="appointments" className="flex items-center gap-2">
+                    <Calendar className="h-4 w-4" />
+                    Appointments
+                  </TabsTrigger>
+                  <TabsTrigger value="profile" className="flex items-center gap-2">
+                    <User className="h-4 w-4" />
+                    Profile
+                  </TabsTrigger>
+                  <TabsTrigger value="history" className="flex items-center gap-2">
+                    <History className="h-4 w-4" />
+                    History
+                  </TabsTrigger>
+                </TabsList>
 
-              <TabsContent value="appointments" className="space-y-6">
-                <div className="flex justify-between items-center">
-                  <h2 className="text-xl font-bold text-gray-900">Upcoming Appointments</h2>
-                  <Button onClick={() => setShowBookingModal(true)}>
-                    <CalendarPlus className="mr-2 h-4 w-4" />
-                    Book New Appointment
-                  </Button>
-                </div>
+                <TabsContent value="appointments" className="space-y-6">
+                  <div className="flex justify-between items-center">
+                    <h2 className="text-xl font-bold text-gray-900">Upcoming Appointments</h2>
+                    <Button onClick={() => setShowBookingModal(true)}>
+                      <CalendarPlus className="mr-2 h-4 w-4" />
+                      Book New Appointment
+                    </Button>
+                  </div>
 
-                {appointmentsLoading ? (
-                  <div className="text-center py-8">Loading appointments...</div>
-                ) : upcomingAppointments.length === 0 ? (
-                  <Card className="text-center p-8">
-                    <CardContent>
-                      <Calendar className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">No Upcoming Appointments</h3>
-                      <p className="text-gray-600 mb-4">Schedule your next dental visit to maintain optimal oral health.</p>
-                      <Button onClick={() => setShowBookingModal(true)}>
-                        Book Appointment
-                      </Button>
-                    </CardContent>
-                  </Card>
-                ) : (
-                  <div className="space-y-4">
-                    {upcomingAppointments.map((appointment: Appointment) => (
-                      <Card key={appointment.id} className="border-l-4 border-l-primary">
-                        <CardContent className="p-6">
-                          <div className="flex justify-between items-start">
-                            <div className="space-y-2">
-                              <h3 className="font-semibold text-gray-900">Service ID: {appointment.serviceId}</h3>
-                              <div className="flex items-center text-gray-600">
-                                <Calendar className="h-4 w-4 mr-2" />
-                                {new Date(appointment.appointmentDate).toLocaleDateString()} at {appointment.appointmentTime}
+                  {appointmentsLoading ? (
+                    <div className="text-center py-8">Loading appointments...</div>
+                  ) : upcomingAppointments.length === 0 ? (
+                    <Card className="text-center p-8">
+                      <CardContent>
+                        <Calendar className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                        <h3 className="text-lg font-semibold text-gray-900 mb-2">No Upcoming Appointments</h3>
+                        <p className="text-gray-600 mb-4">Schedule your next dental visit to maintain optimal oral health.</p>
+                        <Button onClick={() => setShowBookingModal(true)}>
+                          Book Appointment
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  ) : (
+                    <div className="space-y-4">
+                      {upcomingAppointments.map((appointment: Appointment) => (
+                        <Card key={appointment.id} className="border-l-4 border-l-primary">
+                          <CardContent className="p-6">
+                            <div className="flex justify-between items-start">
+                              <div className="space-y-2">
+                                <h3 className="font-semibold text-gray-900">Service ID: {appointment.serviceId}</h3>
+                                <div className="flex items-center text-gray-600">
+                                  <Calendar className="h-4 w-4 mr-2" />
+                                  {new Date(appointment.appointmentDate).toLocaleDateString()} at {appointment.appointmentTime}
+                                </div>
+                                <Badge className={getStatusColor(appointment.status)}>
+                                  {appointment.status.charAt(0).toUpperCase() + appointment.status.slice(1)}
+                                </Badge>
+                              </div>
+                              <div className="flex space-x-2">
+                                <Button 
+                                  variant="outline" 
+                                  size="sm"
+                                  onClick={() => handleCancelAppointment(appointment.id)}
+                                  disabled={updateAppointmentMutation.isPending}
+                                >
+                                  Cancel
+                                </Button>
+                              </div>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      ))}
+                    </div>
+                  )}
+                </TabsContent>
+
+                <TabsContent value="profile" className="space-y-6">
+                  <h2 className="text-xl font-bold text-gray-900">Profile Information</h2>
+                  <form onSubmit={handleUpdateProfile} className="space-y-6">
+                    <div className="grid md:grid-cols-2 gap-6">
+                      <div className="space-y-2">
+                        <Label htmlFor="firstName">First Name</Label>
+                        <Input 
+                          id="firstName"
+                          value={user?.firstName || ""} 
+                          disabled
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="lastName">Last Name</Label>
+                        <Input 
+                          id="lastName"
+                          value={user?.lastName || ""} 
+                          disabled
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="email">Email</Label>
+                      <Input 
+                        id="email"
+                        type="email"
+                        value={user?.email || ""} 
+                        disabled
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="phone">Phone</Label>
+                      <Input 
+                        id="phone"
+                        type="tel"
+                        value={patientData.phone}
+                        onChange={(e) => setPatientData(prev => ({ ...prev, phone: e.target.value }))}
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="dateOfBirth">Date of Birth</Label>
+                      <Input 
+                        id="dateOfBirth"
+                        type="date"
+                        value={patientData.dateOfBirth}
+                        onChange={(e) => setPatientData(prev => ({ ...prev, dateOfBirth: e.target.value }))}
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="address">Address</Label>
+                      <Input 
+                        id="address"
+                        value={patientData.address}
+                        onChange={(e) => setPatientData(prev => ({ ...prev, address: e.target.value }))}
+                      />
+                    </div>
+
+                    <Button type="submit" disabled={updatePatientMutation.isPending}>
+                      {updatePatientMutation.isPending ? "Updating..." : "Update Profile"}
+                    </Button>
+                  </form>
+                </TabsContent>
+
+                <TabsContent value="history" className="space-y-6">
+                  <h2 className="text-xl font-bold text-gray-900">Appointment History</h2>
+                  {pastAppointments.length === 0 ? (
+                    <Card className="text-center p-8">
+                      <CardContent>
+                        <History className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                        <h3 className="text-lg font-semibold text-gray-900 mb-2">No Past Appointments</h3>
+                        <p className="text-gray-600">Your appointment history will appear here.</p>
+                      </CardContent>
+                    </Card>
+                  ) : (
+                    <div className="space-y-4">
+                      {pastAppointments.map((appointment: Appointment) => (
+                        <Card key={appointment.id}>
+                          <CardContent className="p-6">
+                            <div className="flex justify-between items-start">
+                              <div className="space-y-2">
+                                <h3 className="font-semibold text-gray-900">Service ID: {appointment.serviceId}</h3>
+                                <div className="flex items-center text-gray-600">
+                                  <Calendar className="h-4 w-4 mr-2" />
+                                  {new Date(appointment.appointmentDate).toLocaleDateString()} at {appointment.appointmentTime}
+                                </div>
                               </div>
                               <Badge className={getStatusColor(appointment.status)}>
                                 {appointment.status.charAt(0).toUpperCase() + appointment.status.slice(1)}
                               </Badge>
                             </div>
-                            <div className="flex space-x-2">
-                              <Button 
-                                variant="outline" 
-                                size="sm"
-                                onClick={() => handleCancelAppointment(appointment.id)}
-                                disabled={updateAppointmentMutation.isPending}
-                              >
-                                Cancel
-                              </Button>
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-                )}
-              </TabsContent>
-
-              <TabsContent value="profile" className="space-y-6">
-                <h2 className="text-xl font-bold text-gray-900">Profile Information</h2>
-                <form onSubmit={handleUpdateProfile} className="space-y-6">
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <Label htmlFor="firstName">First Name</Label>
-                      <Input 
-                        id="firstName"
-                        value={user?.firstName || ""} 
-                        disabled
-                      />
+                          </CardContent>
+                        </Card>
+                      ))}
                     </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="lastName">Last Name</Label>
-                      <Input 
-                        id="lastName"
-                        value={user?.lastName || ""} 
-                        disabled
-                      />
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
-                    <Input 
-                      id="email"
-                      type="email"
-                      value={user?.email || ""} 
-                      disabled
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="phone">Phone</Label>
-                    <Input 
-                      id="phone"
-                      type="tel"
-                      value={patientData.phone}
-                      onChange={(e) => setPatientData(prev => ({ ...prev, phone: e.target.value }))}
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="dateOfBirth">Date of Birth</Label>
-                    <Input 
-                      id="dateOfBirth"
-                      type="date"
-                      value={patientData.dateOfBirth}
-                      onChange={(e) => setPatientData(prev => ({ ...prev, dateOfBirth: e.target.value }))}
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="address">Address</Label>
-                    <Input 
-                      id="address"
-                      value={patientData.address}
-                      onChange={(e) => setPatientData(prev => ({ ...prev, address: e.target.value }))}
-                    />
-                  </div>
-
-                  <Button type="submit" disabled={updatePatientMutation.isPending}>
-                    {updatePatientMutation.isPending ? "Updating..." : "Update Profile"}
-                  </Button>
-                </form>
-              </TabsContent>
-
-              <TabsContent value="history" className="space-y-6">
-                <h2 className="text-xl font-bold text-gray-900">Appointment History</h2>
-                {pastAppointments.length === 0 ? (
-                  <Card className="text-center p-8">
-                    <CardContent>
-                      <History className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">No Past Appointments</h3>
-                      <p className="text-gray-600">Your appointment history will appear here.</p>
-                    </CardContent>
-                  </Card>
-                ) : (
-                  <div className="space-y-4">
-                    {pastAppointments.map((appointment: Appointment) => (
-                      <Card key={appointment.id}>
-                        <CardContent className="p-6">
-                          <div className="flex justify-between items-start">
-                            <div className="space-y-2">
-                              <h3 className="font-semibold text-gray-900">Service ID: {appointment.serviceId}</h3>
-                              <div className="flex items-center text-gray-600">
-                                <Calendar className="h-4 w-4 mr-2" />
-                                {new Date(appointment.appointmentDate).toLocaleDateString()} at {appointment.appointmentTime}
-                              </div>
-                            </div>
-                            <Badge className={getStatusColor(appointment.status)}>
-                              {appointment.status.charAt(0).toUpperCase() + appointment.status.slice(1)}
-                            </Badge>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-                )}
-              </TabsContent>
-            </Tabs>
-          </CardContent>
-        </Card>
-      </div>
-
-      <BookingModal open={showBookingModal} onOpenChange={setShowBookingModal} />
-    </div>
+                  )}
+                </TabsContent>
+              </Tabs>
+            </CardContent>
+          </Card>
+          <BookingModal open={showBookingModal} onOpenChange={setShowBookingModal} />
+        </div>
+      </SidebarInset>
+    </SidebarProvider>
   );
 }

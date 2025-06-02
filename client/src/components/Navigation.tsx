@@ -39,10 +39,10 @@ export default function Navigation() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`font-medium transition-colors ${
+                className={`font-medium transition-colors text-[var(--font-body-size)] font-[var(--font-body-weight)] ${
                   location === item.href 
                     ? "text-primary font-semibold" 
-                    : "text-gray-700 hover:text-primary"
+                    : "text-foreground hover:text-[color:var(--primary-hover)] focus:text-[color:var(--primary-active)] active:text-[color:var(--primary-active)]"
                 }`}
               >
                 {item.label}
@@ -73,10 +73,10 @@ export default function Navigation() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`block py-2 font-medium transition-colors ${
+                className={`block py-2 font-medium transition-colors text-[var(--font-body-size)] font-[var(--font-body-weight)] ${
                   location === item.href 
                     ? "text-primary font-semibold" 
-                    : "text-gray-700 hover:text-primary"
+                    : "text-foreground hover:text-[color:var(--primary-hover)] focus:text-[color:var(--primary-active)] active:text-[color:var(--primary-active)]"
                 }`}
                 onClick={() => setMobileMenuOpen(false)}
               >

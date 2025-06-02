@@ -38,7 +38,20 @@ const AlertTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <h5
     ref={ref}
-    className={cn("mb-1 font-medium leading-none tracking-tight", className)}
+    className={cn(
+      "mb-1 leading-none tracking-tight",
+      "text-[var(--font-h3-size)]",
+      "leading-[var(--font-h3-line)]",
+      "font-[var(--font-h3-weight)]",
+      className
+    )}
+    style={{
+      fontSize: "var(--font-h3-size)",
+      lineHeight: "var(--font-h3-line)",
+      fontWeight: "var(--font-h3-weight)",
+      letterSpacing: '-0.01em',
+      color: 'hsl(var(--foreground))',
+    }}
     {...props}
   />
 ))

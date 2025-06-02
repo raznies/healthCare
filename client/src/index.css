@@ -3,27 +3,46 @@
 @tailwind utilities;
 
 :root {
-  /* Healthcare Professional Color Scheme */
-  --background: 0 0% 100%; /* Pure white for clean medical aesthetic */
-  --foreground: 224 14% 16%; /* Dark navy for professional text */
-  --muted: 210 11% 98%; /* Very light blue-gray for subtle backgrounds */
-  --muted-foreground: 215 16% 47%; /* Medium gray-blue for secondary text */
-  --popover: 0 0% 100%; /* White for clean popover backgrounds */
-  --popover-foreground: 224 14% 16%; /* Dark navy for popover text */
-  --card: 0 0% 100%; /* White cards for clean appearance */
-  --card-foreground: 224 14% 16%; /* Dark navy for card text */
-  --border: 214 13% 91%; /* Light blue-gray borders */
-  --input: 214 13% 91%; /* Light blue-gray input borders */
-  --primary: 217 91% 60%; /* Professional medical blue #3b82f6 */
-  --primary-foreground: 0 0% 100%; /* White text on primary */
-  --secondary: 210 11% 98%; /* Very light blue-gray for secondary elements */
-  --secondary-foreground: 215 25% 27%; /* Dark blue-gray for secondary text */
-  --accent: 210 11% 98%; /* Light accent matching secondary */
-  --accent-foreground: 215 25% 27%; /* Dark accent text */
-  --destructive: 0 84% 60%; /* Medical red for alerts/errors */
-  --destructive-foreground: 0 0% 98%; /* White text on destructive */
-  --ring: 217 91% 60%; /* Primary blue for focus rings */
-  --radius: 0.5rem; /* Rounded corners for modern look */
+  /* Updated Healthcare Professional Color Scheme */
+  --background: 0 0% 100%; /* Pure white */
+  --foreground: 222 47% 11%; /* #1F2937 - Deep neutral for text */
+  --muted: 210 20% 98%; /* #F9FAFB - Light neutral */
+  --muted-foreground: 215 16% 47%; /* #64748b - Medium gray-blue */
+  --popover: 0 0% 100%; /* White */
+  --popover-foreground: 222 47% 11%; /* #1F2937 */
+  --card: 0 0% 100%; /* White */
+  --card-foreground: 222 47% 11%; /* #1F2937 */
+  --border: 215 13% 91%; /* #E5E7EB - Light blue-gray */
+  --input: 215 13% 91%; /* #E5E7EB */
+  --primary: 222 84% 39%; /* #1E40AF - Trustworthy blue */
+  --primary-foreground: 0 0% 100%; /* White */
+  --primary-hover: 222 84% 34%; /* #1C3576 - Darker blue for hover */
+  --primary-active: 222 84% 29%; /* #172554 - Even darker for active */
+  --secondary: 174 62% 30%; /* #0D9488 - Calming teal */
+  --secondary-foreground: 0 0% 100%; /* White */
+  --secondary-hover: 174 62% 25%; /* #0B7666 - Darker teal for hover */
+  --secondary-active: 174 62% 20%; /* #09594D - Even darker for active */
+  --accent: 27 96% 56%; /* #F97316 - Warm coral */
+  --accent-foreground: 0 0% 100%; /* White */
+  --accent-hover: 27 96% 46%; /* #C2410C - Darker coral for hover */
+  --accent-active: 27 96% 36%; /* #9A3412 - Even darker for active */
+  --destructive: 0 84% 60%; /* #EF4444 - Error red */
+  --destructive-foreground: 0 0% 98%; /* White */
+  --success-green: 142 71% 45%; /* #059669 - Success */
+  --success-foreground: 0 0% 100%; /* White */
+  --warning-yellow: 45 93% 47%; /* #F59E0B - Warning */
+  --warning-foreground: 0 0% 0%; /* Black */
+  --info-blue: 217 91% 60%; /* #3B82F6 - Info */
+  --info-foreground: 0 0% 100%; /* White */
+  --ring: 222 84% 39%; /* #1E40AF - Primary blue for focus */
+  --radius: 0.5rem;
+  /* Neutral scale for backgrounds, borders, etc. */
+  --neutral-900: 222 47% 11%; /* #1F2937 */
+  --neutral-800: 222 47% 17%; /* #374151 */
+  --neutral-700: 215 25% 27%; /* #4B5563 */
+  --neutral-600: 215 16% 47%; /* #64748B */
+  --neutral-400: 215 13% 91%; /* #E5E7EB */
+  --neutral-100: 210 20% 98%; /* #F9FAFB */
   
   /* Healthcare-specific color variables */
   --medical-blue: 217 91% 60%; /* #3b82f6 - Primary medical blue */
@@ -34,6 +53,25 @@
   --emergency-red: 0 84% 60%; /* #dc2626 - Emergency/urgent */
   --success-green: 142 71% 45%; /* #059669 - Success states */
   --warning-yellow: 45 93% 47%; /* #d97706 - Warnings */
+  /* Typography scale */
+  --font-display-size: 48px;
+  --font-display-line: 56px;
+  --font-display-weight: 700;
+  --font-h1-size: 36px;
+  --font-h1-line: 44px;
+  --font-h1-weight: 700;
+  --font-h2-size: 30px;
+  --font-h2-line: 38px;
+  --font-h2-weight: 600;
+  --font-h3-size: 24px;
+  --font-h3-line: 32px;
+  --font-h3-weight: 600;
+  --font-body-size: 16px;
+  --font-body-line: 24px;
+  --font-body-weight: 400;
+  --font-small-size: 14px;
+  --font-small-line: 20px;
+  --font-small-weight: 400;
 }
 
 .dark {
@@ -78,6 +116,49 @@
   body {
     @apply font-sans antialiased bg-background text-foreground;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+    font-size: var(--font-body-size);
+    line-height: var(--font-body-line);
+    font-weight: var(--font-body-weight);
+  }
+
+  h1 {
+    font-size: var(--font-h1-size);
+    line-height: var(--font-h1-line);
+    font-weight: var(--font-h1-weight);
+    letter-spacing: -0.01em;
+    color: hsl(var(--foreground));
+  }
+  h2 {
+    font-size: var(--font-h2-size);
+    line-height: var(--font-h2-line);
+    font-weight: var(--font-h2-weight);
+    letter-spacing: -0.01em;
+    color: hsl(var(--foreground));
+  }
+  h3 {
+    font-size: var(--font-h3-size);
+    line-height: var(--font-h3-line);
+    font-weight: var(--font-h3-weight);
+    letter-spacing: -0.01em;
+    color: hsl(var(--foreground));
+  }
+  h4, h5, h6 {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    font-weight: 600;
+    color: hsl(var(--foreground));
+  }
+  .display {
+    font-size: var(--font-display-size);
+    line-height: var(--font-display-line);
+    font-weight: var(--font-display-weight);
+    letter-spacing: -0.02em;
+    color: hsl(var(--foreground));
+  }
+  small, .text-small {
+    font-size: var(--font-small-size);
+    line-height: var(--font-small-line);
+    font-weight: var(--font-small-weight);
   }
 
   /* Healthcare-specific typography */
