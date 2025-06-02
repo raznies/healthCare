@@ -85,17 +85,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Send email confirmation
       try {
-        const patient = appointment.patientId ? await storage.getPatient(appointment.patientId) : null;
-        const user = patient?.userId ? await storage.getUser(patient.userId) : null;
-        const service = appointment.serviceId ? await storage.getService(appointment.serviceId) : null;
+        if (appointment.patientId && appointment.serviceId) {
+          const patient = await storage.getPatient(appointment.patientId);
+          const user = patient?.userId ? await storage.getUser(patient.userId) : null;
+          const service = await storage.getService(appointment.serviceId);
 
-        if (patient && user && service && user.email) {
-          await sendAppointmentConfirmation({
-            appointment,
-            patient,
-            user,
-            service
-          });
+          if (patient && user && service && user.email) {
+            await sendAppointmentConfirmation({
+              appointment,
+              patient,
+              user,
+              service
+            });
+          }
         }
       } catch (emailError) {
         console.error('Email sending failed:', emailError);

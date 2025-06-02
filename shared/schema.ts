@@ -160,6 +160,13 @@ export const availabilityRelations = relations(availability, ({ one }) => ({
   }),
 }));
 
+export const blockedSlotsRelations = relations(blockedSlots, ({ one }) => ({
+  doctor: one(users, {
+    fields: [blockedSlots.doctorId],
+    references: [users.id],
+  }),
+}));
+
 // Create insert schemas
 export const insertUserSchema = createInsertSchema(users).omit({
   createdAt: true,
@@ -193,6 +200,11 @@ export const insertAvailabilitySchema = createInsertSchema(availability).omit({
   createdAt: true,
 });
 
+export const insertBlockedSlotSchema = createInsertSchema(blockedSlots).omit({
+  id: true,
+  createdAt: true,
+});
+
 // Export types
 export type UpsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
@@ -206,3 +218,5 @@ export type InsertContactMessage = z.infer<typeof insertContactMessageSchema>;
 export type ContactMessage = typeof contactMessages.$inferSelect;
 export type InsertAvailability = z.infer<typeof insertAvailabilitySchema>;
 export type Availability = typeof availability.$inferSelect;
+export type InsertBlockedSlot = z.infer<typeof insertBlockedSlotSchema>;
+export type BlockedSlot = typeof blockedSlots.$inferSelect;
