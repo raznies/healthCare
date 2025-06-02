@@ -1,0 +1,743 @@
+# Product Requirements Document (PRD)
+## Individual Healthcare Provider Website with Booking System
+
+**Version:** 1.0  
+**Date:** June 2, 2025  
+**Product Type:** Individual Clinic Website Solution with Integrated Booking System  
+
+---
+
+## 1. Executive Summary
+
+### 1.1 Product Vision
+Create a comprehensive, customizable website solution for individual healthcare providers (dentists, doctors, specialists) that includes professional web presence, integrated appointment booking system, patient management, and practice administration tools.
+
+### 1.2 Business Objectives
+- Provide turnkey website solutions for 1,000+ individual healthcare providers
+- Replace manual appointment booking with automated digital systems
+- Reduce no-shows by 40% through automated reminder systems
+- Generate ₹10,000-₹25,000 monthly recurring revenue per client
+- Establish presence in 50+ cities across India within 2 years
+
+### 1.3 Success Metrics
+- **Client Acquisition:** 100 healthcare providers in Year 1
+- **Booking Efficiency:** 70% reduction in phone-based appointment booking
+- **Revenue per Client:** ₹15,000 average monthly subscription
+- **Client Retention:** 90% annual retention rate
+- **Patient Satisfaction:** 4.5+ star rating for booking experience
+
+---
+
+## 2. Product Overview
+
+### 2.1 Core Product Components
+1. **Custom Clinic Website** - Professional, SEO-optimized website for individual practice
+2. **Integrated Booking System** - Real-time appointment scheduling embedded in website
+3. **Patient Portal** - Account management and appointment history for clinic patients
+4. **Dentist/Clinic Dashboard** - Practice management and appointment administration
+5. **Automated Notifications** - Multi-channel patient communication system
+6. **Practice Analytics** - Business insights and performance metrics
+
+### 2.2 Target Customer Profile
+- **Primary Client:** Individual dentists, general practitioners, specialists with private practice
+- **Practice Size:** Solo practitioners to small clinics (1-5 doctors)
+- **Location:** Tier 2 and Tier 3 cities across India
+- **Technology Comfort:** Moderate to low technical expertise
+- **Budget:** ₹10,000-₹30,000/month for digital solutions
+
+---
+
+## 3. User Personas
+
+### 3.1 Dr. Anjali Gupta (Primary Client - Dentist)
+- **Age:** 35-50
+- **Practice:** Independent dental clinic, 10 years experience
+- **Current Challenges:** Manual appointment booking, patient no-shows, marketing
+- **Technology Comfort:** Moderate (uses WhatsApp, basic computer skills)
+- **Goals:** Professional online presence, reduced administrative work, more patients
+- **Budget:** ₹15,000-₹20,000/month for complete digital solution
+
+### 3.2 Priya Sharma (Patient)
+- **Age:** 25-45
+- **Behavior:** Prefers online booking, mobile-first user
+- **Pain Points:** Calling during clinic hours, waiting times, appointment reminders
+- **Expectations:** Easy booking, appointment confirmations, rescheduling options
+- **Device Usage:** Primarily smartphone, some desktop usage
+
+### 3.3 Clinic Receptionist (Secondary User)
+- **Age:** 25-40
+- **Role:** Manages appointments, patient calls, clinic administration
+- **Technology Comfort:** Basic to moderate
+- **Goals:** Easier appointment management, reduced phone calls, organized schedule
+- **Needs:** Simple interface, patient information access, schedule management
+
+---
+
+## 4. Functional Requirements
+
+### 4.1 Custom Clinic Website
+
+#### 4.1.1 Website Creation & Customization
+- **Requirement:** Professional website tailored to individual clinic
+- **Features:**
+  - Clinic-specific domain (e.g., dranjali.com or dranjalidental.com)
+  - Customizable templates with dental/medical themes
+  - Clinic branding (logo, colors, fonts, imagery)
+  - Multi-page structure (Home, About, Services, Gallery, Contact, Book Appointment)
+  - Mobile-responsive design optimized for local patients
+
+#### 4.1.2 Content Management
+- **Requirement:** Easy content updates for clinic staff
+- **Features:**
+  - Doctor profile management (qualifications, experience, photo)
+  - Service descriptions with pricing
+  - Clinic information (hours, location, contact details)
+  - Photo gallery for clinic facilities and team
+  - Blog/news section for health tips and updates
+
+#### 4.1.3 SEO & Local Optimization
+- **Requirement:** High visibility in local search results
+- **Features:**
+  - Google My Business integration
+  - Local SEO optimization for city/area keywords
+  - Schema markup for healthcare provider
+  - Meta tags and descriptions optimization
+  - Google Maps integration with directions
+
+### 4.2 Integrated Booking System
+
+#### 4.2.1 Appointment Scheduling
+- **Requirement:** Real-time appointment booking embedded in website
+- **Features:**
+  - Calendar widget on homepage and dedicated booking page
+  - Real-time availability display
+  - Service selection with duration and pricing
+  - Date and time slot selection interface
+  - Instant booking confirmation
+
+#### 4.2.2 Schedule Management
+- **Requirement:** Flexible schedule configuration for clinic
+- **Features:**
+  - Working hours setup (daily, weekly patterns)
+  - Holiday and break time management
+  - Appointment duration settings per service
+  - Buffer time between appointments
+  - Emergency slot creation
+
+#### 4.2.3 Booking Rules & Restrictions
+- **Requirement:** Customizable booking policies
+- **Features:**
+  - Advance booking limits (e.g., max 30 days ahead)
+  - Same-day booking cutoff times
+  - Minimum notice for cancellations
+  - Maximum appointments per day limits
+  - Recurring appointment options
+
+### 4.3 Patient Portal
+
+#### 4.3.1 Patient Account Management
+- **Requirement:** Personal accounts for clinic patients
+- **Features:**
+  - Simple registration with phone/email
+  - Patient profile with contact information
+  - Medical history and notes section
+  - Appointment preferences and reminders settings
+  - Family member account linking
+
+#### 4.3.2 Appointment Management
+- **Requirement:** Complete appointment control for patients
+- **Features:**
+  - Current and upcoming appointments display
+  - Appointment history with visit summaries
+  - One-click rescheduling within policy limits
+  - Cancellation with automatic waitlist notification
+  - Appointment confirmation and reminder settings
+
+#### 4.3.3 Communication Hub
+- **Requirement:** Direct communication with clinic
+- **Features:**
+  - Secure messaging with clinic staff
+  - Appointment-specific notifications
+  - Pre-appointment instructions and forms
+  - Post-appointment care instructions
+  - Feedback and review submission
+
+### 4.4 Dentist/Clinic Dashboard
+
+#### 4.4.1 Daily Operations Management
+- **Requirement:** Centralized clinic management interface
+- **Features:**
+  - Today's appointment schedule with patient details
+  - Real-time appointment status updates
+  - Patient check-in/check-out functionality
+  - Quick appointment addition and modification
+  - Emergency appointment insertion
+
+#### 4.4.2 Patient Management System
+- **Requirement:** Comprehensive patient information system
+- **Features:**
+  - Complete patient database with contact information
+  - Appointment history and treatment records
+  - Patient communication logs
+  - Medical notes and treatment planning
+  - Payment history and outstanding amounts
+
+#### 4.4.3 Schedule & Availability Control
+- **Requirement:** Complete control over clinic schedule
+- **Features:**
+  - Calendar view (daily, weekly, monthly)
+  - Availability modification and time blocking
+  - Recurring schedule templates
+  - Holiday and vacation planning
+  - Multiple staff member scheduling (if applicable)
+
+#### 4.4.4 Business Analytics & Reports
+- **Requirement:** Practice performance insights
+- **Features:**
+  - Appointment volume trends and patterns
+  - Revenue tracking and financial reports
+  - Patient acquisition and retention metrics
+  - No-show and cancellation analysis
+  - Peak time and resource utilization analysis
+
+### 4.5 Automated Notification System
+
+#### 4.5.1 Multi-Channel Communications
+- **Requirement:** Comprehensive patient communication
+- **Features:**
+  - WhatsApp notifications for instant engagement
+  - SMS backup for patients without WhatsApp
+  - Email confirmations with appointment details
+  - In-app notifications for portal users
+  - Voice call reminders for elderly patients
+
+#### 4.5.2 Automated Messaging Workflows
+- **Requirement:** Intelligent communication automation
+- **Features:**
+  - Instant booking confirmations
+  - 24-hour appointment reminders
+  - 2-hour final reminders
+  - Follow-up messages post-appointment
+  - Birthday wishes and checkup reminders
+
+---
+
+## 5. Non-Functional Requirements
+
+### 5.1 Performance Requirements
+- **Website Loading:** All pages load within 3 seconds on 3G networks
+- **Booking Response:** Appointment booking completes within 5 seconds
+- **Uptime:** 99.5% availability (maximum 4 hours downtime monthly)
+- **Concurrent Users:** Support 200 simultaneous bookings per clinic
+
+### 5.2 Security & Privacy
+- **Data Protection:** Patient data encryption and secure storage
+- **Payment Security:** PCI DSS compliance for payment processing
+- **Access Control:** Role-based permissions for clinic staff
+- **Backup & Recovery:** Daily automated backups with 30-day retention
+
+### 5.3 Usability Requirements
+- **Mobile Optimization:** 100% mobile-responsive for patient booking
+- **Browser Support:** Chrome, Firefox, Safari, Edge compatibility
+- **Accessibility:** Basic accessibility compliance for diverse patients
+- **Language Support:** English and Hindi, with regional language options
+
+---
+
+## 6. User Stories
+
+### 6.1 Clinic Owner (Dentist) Stories
+- **As a dentist**, I want a professional website so that patients can find and trust my practice online
+- **As a dentist**, I want to manage my schedule easily so that I can control my availability
+- **As a dentist**, I want to see patient information quickly so that I can prepare for appointments
+- **As a dentist**, I want automated reminders sent so that I have fewer no-shows
+- **As a dentist**, I want to track my practice performance so that I can make business decisions
+
+### 6.2 Patient Stories
+- **As a patient**, I want to book appointments online so that I don't need to call during busy hours
+- **As a patient**, I want to receive appointment reminders so that I don't forget my visits
+- **As a patient**, I want to reschedule easily so that I can manage my time effectively
+- **As a patient**, I want to see my appointment history so that I can track my dental health
+- **As a patient**, I want to communicate with the clinic so that I can ask questions
+
+### 6.3 Clinic Staff Stories
+- **As clinic staff**, I want to see the daily schedule so that I can prepare for patients
+- **As clinic staff**, I want to manage patient information so that I can provide better service
+- **As clinic staff**, I want to handle appointment changes so that I can accommodate patient needs
+- **As clinic staff**, I want to send messages to patients so that I can provide updates
+
+---
+
+## 7. Technical Architecture
+
+### 7.1 Technology Stack
+- **Frontend:** React with TypeScript, Shadcn UI components
+- **Backend:** Appwrite Backend-as-a-Service
+- **Database:** Appwrite Database with real-time capabilities
+- **Authentication:** Appwrite Auth with multi-factor options
+- **File Storage:** Appwrite Storage for images and documents
+
+### 7.2 Integration Requirements
+- **Calendar Sync:** Google Calendar API for dentist's personal calendar
+- **Communication:** WhatsApp Business API, SMS gateway, email service
+- **Payments:** Razorpay or Paytm for consultation fee collection
+- **Maps:** Google Maps for clinic location and directions
+- **Analytics:** Google Analytics for website traffic insights
+
+---
+
+## 8. Pricing & Business Model
+
+### 8.1 Subscription Tiers
+- **Basic Plan:** ₹8,999/month
+  - Professional website with booking system
+  - Up to 200 appointments/month
+  - Basic notifications (SMS + Email)
+  - Standard analytics
+
+- **Professional Plan:** ₹15,999/month
+  - All Basic features
+  - Unlimited appointments
+  - WhatsApp notifications
+  - Advanced analytics and reports
+  - Multiple staff account access
+
+- **Premium Plan:** ₹24,999/month
+  - All Professional features
+  - Payment integration
+  - Advanced patient management
+  - Marketing tools and campaigns
+  - Priority support
+
+### 8.2 Additional Services
+- **Setup Fee:** ₹10,000-₹15,000 for initial configuration
+- **Custom Design:** ₹20,000 for fully custom website design
+- **Training:** ₹5,000 for comprehensive staff training
+- **Marketing Support:** ₹10,000/month for digital marketing services
+
+---
+
+## 9. Implementation Timeline
+
+### 9.1 Phase 1: MVP Development (Months 1-2)
+- Basic website template system
+- Core booking functionality
+- Simple dashboards for dentist and patients
+- Basic notification system
+
+### 9.2 Phase 2: Enhanced Features (Months 3-4)
+- Advanced analytics and reporting
+- Payment integration
+- WhatsApp API integration
+- Mobile optimization improvements
+
+### 9.3 Phase 3: Scale & Polish (Months 5-6)
+- Multiple template options
+- Advanced customization tools
+- Performance optimization
+- Comprehensive testing and launch
+
+---
+
+## 10. Success Criteria
+
+### 10.1 Client Success Metrics
+- 50% reduction in time spent on appointment scheduling
+- 40% decrease in no-show rates
+- 30% increase in new patient appointments
+- 25% improvement in patient satisfaction scores
+
+### 10.2 Business Success Metrics
+- 100 active clinic clients by month 12
+- ₹15 lakh monthly recurring revenue by year-end
+- 90% client retention rate
+- 4.8+ star rating from clinic owners
+
+Tech Stack for Healthcare Booking System
+Frontend Technology Stack
+Core Framework
+React.js 18+ with TypeScript for type safety and better development experience
+
+Vite as the build tool for faster development and optimized production builds
+
+React Router DOM v6 for client-side routing and navigation
+
+UI Framework & Styling
+Shadcn UI (built on Radix UI primitives) for accessible, customizable components
+
+Tailwind CSS for utility-first styling and responsive design
+
+Lucide React for consistent iconography
+
+Framer Motion (optional) for smooth animations and transitions
+
+State Management & Data Handling
+React Context API for global state management (authentication, user data)
+
+React Hook Form for efficient form handling and validation
+
+Zod for schema validation and TypeScript inference
+
+TanStack Query (React Query) for server state management and caching
+
+Utility Libraries
+date-fns for date manipulation and formatting
+
+axios for HTTP requests and API communication
+
+clsx and tailwind-merge for conditional CSS classes
+
+Backend Technology Stack
+Backend as a Service
+Appwrite Cloud for comprehensive backend infrastructure
+
+Appwrite Database with NoSQL collections for flexible data modeling
+
+Appwrite Authentication supporting multiple auth methods (email/password, OAuth)
+
+Appwrite Storage for file uploads (images, documents)
+
+Appwrite Functions for server-side logic and scheduled tasks
+
+Database Collections Structure
+Users Collection - Patient and doctor profiles
+
+Appointments Collection - Booking data and status
+
+Clinics Collection - Healthcare provider information
+
+Services Collection - Treatment types and pricing
+
+Notifications Collection - Message logs and preferences
+
+External API Integrations
+Calendar & Scheduling
+Google Calendar API for real-time availability synchronization
+
+CalDAV protocol for calendar integration across platforms
+
+Communication Services
+WhatsApp Business Cloud API for instant messaging
+
+Twilio or MSG91 for SMS notifications
+
+SendGrid or Appwrite Email for email notifications
+
+Payment Processing
+Razorpay for comprehensive Indian payment processing
+
+Paytm as alternative payment gateway
+
+UPI integration for instant digital payments
+
+Location & Maps
+Google Maps API for clinic location and directions
+
+Google Places API for address autocomplete and validation
+
+Development Tools & Environment
+Development Environment
+Node.js 18+ for development tooling
+
+npm or yarn for package management
+
+ESLint and Prettier for code formatting and linting
+
+TypeScript for static type checking
+
+Version Control & Collaboration
+Git with GitHub for source code management
+
+GitHub Actions for CI/CD automation
+
+Conventional Commits for standardized commit messages
+
+Testing Framework
+Vitest for unit and integration testing
+
+React Testing Library for component testing
+
+Playwright for end-to-end testing
+
+MSW (Mock Service Worker) for API mocking
+
+Deployment & Infrastructure
+Frontend Hosting
+Vercel for frontend deployment with automatic builds
+
+Netlify as alternative hosting platform
+
+Cloudflare for CDN and performance optimization
+
+Backend Infrastructure
+Appwrite Cloud for managed backend services
+
+Appwrite Self-hosted option for enterprise clients
+
+Domain & SSL
+Custom domains for each clinic (e.g., drsmith.clinic)
+
+SSL certificates through hosting providers
+
+DNS management through Cloudflare or domain registrar
+
+Monitoring & Analytics
+Error Tracking & Monitoring
+Sentry for error tracking and performance monitoring
+
+Appwrite Console for backend monitoring and analytics
+
+Analytics & Insights
+Google Analytics 4 for website traffic analysis
+
+Custom analytics dashboard using Appwrite database queries
+
+Real-time dashboards for appointment and clinic metrics
+
+Security & Compliance
+Authentication & Authorization
+JWT tokens managed by Appwrite Auth
+
+Role-based access control (patient, doctor, admin)
+
+Multi-factor authentication for enhanced security
+
+Data Protection
+TLS/SSL encryption for data in transit
+
+AES-256 encryption for sensitive data at rest
+
+GDPR compliance features for data privacy
+
+Regular security audits and vulnerability assessments
+
+
+Complete Website Design Guide for Healthcare Booking System
+Design Philosophy & Approach
+For your first freelance project, this design will establish you as a professional who understands both aesthetic appeal and functional user experience in the healthcare industry.
+
+Design Principles
+Trust-First Design: Every element should build patient confidence
+
+Clarity Over Complexity: Simple, intuitive navigation that even elderly patients can use
+
+Professional Medical Aesthetic: Clean, sterile feeling with warm, approachable touches
+
+Mobile-First Excellence: 70% of patients will book on mobile devices
+
+Accessibility-Driven: Inclusive design for all age groups and abilities
+
+Comprehensive Design Specifications
+Global Style System
+Color Strategy
+Primary Brand Blue: #2563EB (Trust, reliability, medical professionalism)
+
+Success Green: #059669 (Appointments confirmed, positive actions)
+
+Pure White: #FFFFFF (Cleanliness, medical sterility)
+
+Neutral Gray Palette:
+
+Light: #F8FAFC (Backgrounds, cards)
+
+Medium: #6B7280 (Secondary text, borders)
+
+Dark: #374151 (Primary text, headers)
+
+Accent Colors:
+
+Warning Amber: #F59E0B (Alerts, reminders)
+
+Error Red: #EF4444 (Cancellations, urgent notices)
+
+Info Blue: #3B82F6 (Information, help text)
+
+Typography Hierarchy
+Primary Font: Inter (Modern, highly readable, professional)
+
+Font Scales:
+
+Display: 48px (Hero headings)
+
+H1: 36px (Page titles)
+
+H2: 28px (Section headers)
+
+H3: 22px (Subsection titles)
+
+H4: 18px (Card titles)
+
+Body Large: 18px (Important content)
+
+Body: 16px (Standard text)
+
+Small: 14px (Captions, labels)
+
+Tiny: 12px (Fine print)
+
+Spacing System
+Base Unit: 4px
+
+Scale: 4px, 8px, 12px, 16px, 24px, 32px, 48px, 64px, 96px
+
+Component Padding: 16px-24px standard
+
+Section Margins: 48px-96px between major sections
+
+Component Design Standards
+Buttons
+Primary: Blue background, white text, 8px border radius, subtle shadow
+
+Secondary: White background, blue border and text
+
+Success: Green background for confirmations
+
+Sizes: Small (32px), Medium (40px), Large (48px)
+
+Hover States: Slight color darkening with gentle shadow increase
+
+Cards
+Standard Card: White background, 1px border (#E5E7EB), 8px border radius
+
+Hover State: Subtle shadow lift (0 4px 12px rgba(0,0,0,0.05))
+
+Padding: 20px standard, 16px mobile
+
+Information Hierarchy: Clear title, subtitle, content, action zones
+
+Page-by-Page Design Specifications
+1. Homepage Design
+Navigation Header
+Fixed header with clinic logo on left
+
+Clean navigation menu: Home | About | Services | Contact | Book Appointment
+
+Prominent "Book Now" CTA button (blue, slightly larger)
+
+Mobile: Hamburger menu with smooth slide-out navigation
+
+Phone number displayed prominently for emergency calls
+
+Hero Section
+Full-width section with professional dental clinic image background
+
+Gentle blue gradient overlay for text readability
+
+Headline: "Professional Dental Care You Can Trust"
+
+Subheadline: "Book your appointment online - it's quick, easy, and secure"
+
+Two CTAs: "Book Appointment Now" (primary blue) + "View Our Services" (secondary)
+
+Trust Indicators: "15+ Years Experience | 5000+ Happy Patients | Modern Equipment"
+
+Services Section
+3-column grid of service cards (mobile: single column)
+
+Each card: Service icon, title, brief description, "Learn More" link
+
+Icons: Dental cleaning, orthodontics, cosmetic dentistry, emergency care
+
+Hover effects with gentle card lift and color transitions
+
+About Doctor Section
+Left: Professional doctor photo in clinical setting
+
+Right: Doctor credentials, experience, specializations
+
+Patient testimonials with star ratings
+
+"Meet the Doctor" CTA button
+
+Booking Preview Section
+Embedded mini-calendar showing availability
+
+"Quick Book" functionality with simplified form
+
+Real-time availability indicators
+
+"Full Booking System" link to dedicated page
+
+2. Services Page Design
+Service Catalog Layout
+Grid layout with detailed service cards
+
+Each service: Large icon, title, description, duration, price
+
+Filter options: By type, duration, price range
+
+Professional before/after photos where appropriate
+
+3. Booking System Design
+Multi-Step Booking Flow
+Step 1: Service Selection
+
+Visual service cards with icons and descriptions
+
+Clear pricing and duration display
+
+Progress indicator showing booking steps
+
+Step 2: Date & Time Selection
+
+Large, intuitive calendar component
+
+Available dates highlighted in blue
+
+Time slots displayed as clickable buttons
+
+Real-time availability updates
+
+Step 3: Patient Information
+
+Clean, organized form with proper spacing
+
+Required field indicators
+
+Helpful placeholder text
+
+Progress saving for form abandonment recovery
+
+Step 4: Confirmation
+
+Appointment summary card
+
+Contact information display
+
+Calendar integration options
+
+Clear next steps communication
+
+4. Patient Dashboard Design
+Dashboard Layout
+Sidebar navigation with user profile section
+
+Main content area with card-based information display
+
+Quick action buttons prominently placed
+
+Dashboard Sections
+Upcoming Appointments: Timeline-style cards with appointment details
+
+Appointment History: Clean table with search and filter options
+
+Quick Actions: Book New, Reschedule, Contact Clinic
+
+Profile Management: Easy-to-edit personal information forms
+
+5. Dentist Dashboard Design
+Professional Admin Interface
+Clean, data-rich interface design
+
+Today's schedule with patient preparation information
+
+Quick statistics overview (today's appointments, week's revenue, etc.)
+
+Dashboard Components
+Calendar Management: Availability setting with drag-and-drop functionality
+
+Patient Records: Searchable database with treatment history
+
+Analytics Section: Charts showing appointment trends and practice growth
+
+Settings Panel: Practice configuration and notification preferences
