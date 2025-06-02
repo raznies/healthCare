@@ -72,10 +72,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post('/api/appointments', async (req, res) => {
     try {
       const appointmentData = insertAppointmentSchema.parse(req.body);
+      
+      // Use the clinic's default doctor
+      const defaultDoctorId = 'doctor-1';
+      
       const appointment = await storage.createAppointment({
         ...appointmentData,
         status: 'scheduled',
-        doctorId: 'doctor-1' // Default doctor for MVP
+        doctorId: defaultDoctorId
       });
       res.status(201).json(appointment);
     } catch (error) {
