@@ -36,19 +36,9 @@ const CardTitle = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "font-semibold leading-none tracking-tight",
-      "text-[var(--font-h2-size)]",
-      "leading-[var(--font-h2-line)]",
-      "font-[var(--font-h2-weight)]",
+      "text-2xl font-semibold leading-tight tracking-tight text-foreground",
       className
     )}
-    style={{
-      fontSize: "var(--font-h2-size)",
-      lineHeight: "var(--font-h2-line)",
-      fontWeight: "var(--font-h2-weight)",
-      letterSpacing: '-0.01em',
-      color: 'hsl(var(--foreground))',
-    }}
     {...props}
   />
 ))
