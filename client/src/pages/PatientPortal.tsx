@@ -4,16 +4,19 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
-import { Calendar, Clock, User, History, CalendarPlus } from "lucide-react";
+import { Calendar, User, History, CalendarPlus } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { isUnauthorizedError } from "@/lib/authUtils";
 import BookingModal from "@/components/BookingModal";
+import { StatusBadge } from "@/components/StatusBadge";
+import { EmptyState } from "@/components/EmptyState";
+import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { SidebarProvider, Sidebar, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarHeader, SidebarInput, SidebarInset } from "@/components/ui/sidebar";
 import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, BreadcrumbPage } from "@/components/ui/breadcrumb";
+import { spacing } from "@/lib/designTokens";
 
 interface Appointment {
   id: number;
@@ -157,32 +160,18 @@ export default function PatientPortal() {
     updateAppointmentMutation.mutate({ id: appointmentId, status: "cancelled" });
   };
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "scheduled": return "bg-blue-100 text-blue-800";
-      case "confirmed": return "bg-green-100 text-green-800";
-      case "completed": return "bg-gray-100 text-gray-800";
-      case "cancelled": return "bg-red-100 text-red-800";
-      default: return "bg-gray-100 text-gray-800";
-    }
-  };
-
-  const upcomingAppointments = appointments.filter((apt: Appointment) => 
-    new Date(`${apt.appointmentDate}T${apt.appointmentTime}`) > new Date() && 
+  const upcomingAppointments = appointments.filter((apt: Appointment) =>
+    new Date(`${apt.appointmentDate}T${apt.appointmentTime}`) > new Date() &&
     apt.status !== "cancelled"
   );
 
-  const pastAppointments = appointments.filter((apt: Appointment) => 
-    new Date(`${apt.appointmentDate}T${apt.appointmentTime}`) <= new Date() || 
+  const pastAppointments = appointments.filter((apt: Appointment) =>
+    new Date(`${apt.appointmentDate}T${apt.appointmentTime}`) <= new Date() ||
     apt.status === "cancelled"
   );
 
   if (isLoading || !isAuthenticated) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary"></div>
-      </div>
-    );
+    return <LoadingSpinner size="lg" />;
   }
 
   return (
@@ -223,7 +212,7 @@ export default function PatientPortal() {
         </SidebarContent>
       </Sidebar>
       <SidebarInset>
-        <div className="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+        <div className="container-narrow section-dashboard">
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem>
@@ -235,17 +224,17 @@ export default function PatientPortal() {
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
-          <Card className="shadow-xl">
+          <Card className="shadow-xl mt-6">
             <CardHeader className="bg-primary text-white rounded-t-lg">
               <div className="text-center">
-                <CardTitle className="text-3xl mb-2">Patient Portal</CardTitle>
+                <CardTitle className="text-3xl mb-2 text-white">Patient Portal</CardTitle>
                 <p className="text-primary-100">Welcome back, {user?.firstName || "Patient"}!</p>
               </div>
             </CardHeader>
 
-            <CardContent className="p-8">
+            <CardContent className="p-6">
               <Tabs defaultValue="appointments" className="w-full">
-                <TabsList className="grid w-full grid-cols-3 mb-8">
+                <TabsList className="grid w-full grid-cols-3 mb-6">
                   <TabsTrigger value="appointments" className="flex items-center gap-2">
                     <Calendar className="h-4 w-4" />
                     Appointments
@@ -262,7 +251,7 @@ export default function PatientPortal() {
 
                 <TabsContent value="appointments" className="space-y-6">
                   <div className="flex justify-between items-center">
-                    <h2 className="text-xl font-bold text-gray-900">Upcoming Appointments</h2>
+                    <h2 className="text-xl font-bold">Upcoming Appointments</h2>
                     <Button onClick={() => setShowBookingModal(true)}>
                       <CalendarPlus className="mr-2 h-4 w-4" />
                       Book New Appointment
@@ -272,35 +261,33 @@ export default function PatientPortal() {
                   {appointmentsLoading ? (
                     <div className="text-center py-8">Loading appointments...</div>
                   ) : upcomingAppointments.length === 0 ? (
-                    <Card className="text-center p-8">
-                      <CardContent>
-                        <Calendar className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                        <h3 className="text-lg font-semibold text-gray-900 mb-2">No Upcoming Appointments</h3>
-                        <p className="text-gray-600 mb-4">Schedule your next dental visit to maintain optimal oral health.</p>
+                    <EmptyState
+                      icon={<Calendar className="h-12 w-12" />}
+                      title="No Upcoming Appointments"
+                      description="Schedule your next dental visit to maintain optimal oral health."
+                      action={
                         <Button onClick={() => setShowBookingModal(true)}>
                           Book Appointment
                         </Button>
-                      </CardContent>
-                    </Card>
+                      }
+                    />
                   ) : (
                     <div className="space-y-4">
                       {upcomingAppointments.map((appointment: Appointment) => (
-                        <Card key={appointment.id} className="border-l-4 border-l-primary">
+                        <Card key={appointment.id} className="border-l-4 border-l-[hsl(var(--appointment-blue))]">
                           <CardContent className="p-6">
                             <div className="flex justify-between items-start">
                               <div className="space-y-2">
-                                <h3 className="font-semibold text-gray-900">Service ID: {appointment.serviceId}</h3>
-                                <div className="flex items-center text-gray-600">
+                                <h3 className="font-semibold">Service ID: {appointment.serviceId}</h3>
+                                <div className="flex items-center text-muted-foreground">
                                   <Calendar className="h-4 w-4 mr-2" />
                                   {new Date(appointment.appointmentDate).toLocaleDateString()} at {appointment.appointmentTime}
                                 </div>
-                                <Badge className={getStatusColor(appointment.status)}>
-                                  {appointment.status.charAt(0).toUpperCase() + appointment.status.slice(1)}
-                                </Badge>
+                                <StatusBadge status={appointment.status} />
                               </div>
                               <div className="flex space-x-2">
-                                <Button 
-                                  variant="outline" 
+                                <Button
+                                  variant="outline"
                                   size="sm"
                                   onClick={() => handleCancelAppointment(appointment.id)}
                                   disabled={updateAppointmentMutation.isPending}
@@ -317,22 +304,22 @@ export default function PatientPortal() {
                 </TabsContent>
 
                 <TabsContent value="profile" className="space-y-6">
-                  <h2 className="text-xl font-bold text-gray-900">Profile Information</h2>
+                  <h2 className="text-xl font-bold">Profile Information</h2>
                   <form onSubmit={handleUpdateProfile} className="space-y-6">
                     <div className="grid md:grid-cols-2 gap-6">
                       <div className="space-y-2">
                         <Label htmlFor="firstName">First Name</Label>
-                        <Input 
+                        <Input
                           id="firstName"
-                          value={user?.firstName || ""} 
+                          value={user?.firstName || ""}
                           disabled
                         />
                       </div>
                       <div className="space-y-2">
                         <Label htmlFor="lastName">Last Name</Label>
-                        <Input 
+                        <Input
                           id="lastName"
-                          value={user?.lastName || ""} 
+                          value={user?.lastName || ""}
                           disabled
                         />
                       </div>
@@ -340,17 +327,17 @@ export default function PatientPortal() {
 
                     <div className="space-y-2">
                       <Label htmlFor="email">Email</Label>
-                      <Input 
+                      <Input
                         id="email"
                         type="email"
-                        value={user?.email || ""} 
+                        value={user?.email || ""}
                         disabled
                       />
                     </div>
 
                     <div className="space-y-2">
                       <Label htmlFor="phone">Phone</Label>
-                      <Input 
+                      <Input
                         id="phone"
                         type="tel"
                         value={patientData.phone}
@@ -360,7 +347,7 @@ export default function PatientPortal() {
 
                     <div className="space-y-2">
                       <Label htmlFor="dateOfBirth">Date of Birth</Label>
-                      <Input 
+                      <Input
                         id="dateOfBirth"
                         type="date"
                         value={patientData.dateOfBirth}
@@ -370,7 +357,7 @@ export default function PatientPortal() {
 
                     <div className="space-y-2">
                       <Label htmlFor="address">Address</Label>
-                      <Input 
+                      <Input
                         id="address"
                         value={patientData.address}
                         onChange={(e) => setPatientData(prev => ({ ...prev, address: e.target.value }))}
@@ -384,15 +371,13 @@ export default function PatientPortal() {
                 </TabsContent>
 
                 <TabsContent value="history" className="space-y-6">
-                  <h2 className="text-xl font-bold text-gray-900">Appointment History</h2>
+                  <h2 className="text-xl font-bold">Appointment History</h2>
                   {pastAppointments.length === 0 ? (
-                    <Card className="text-center p-8">
-                      <CardContent>
-                        <History className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                        <h3 className="text-lg font-semibold text-gray-900 mb-2">No Past Appointments</h3>
-                        <p className="text-gray-600">Your appointment history will appear here.</p>
-                      </CardContent>
-                    </Card>
+                    <EmptyState
+                      icon={<History className="h-12 w-12" />}
+                      title="No Past Appointments"
+                      description="Your appointment history will appear here."
+                    />
                   ) : (
                     <div className="space-y-4">
                       {pastAppointments.map((appointment: Appointment) => (
@@ -400,15 +385,13 @@ export default function PatientPortal() {
                           <CardContent className="p-6">
                             <div className="flex justify-between items-start">
                               <div className="space-y-2">
-                                <h3 className="font-semibold text-gray-900">Service ID: {appointment.serviceId}</h3>
-                                <div className="flex items-center text-gray-600">
+                                <h3 className="font-semibold">Service ID: {appointment.serviceId}</h3>
+                                <div className="flex items-center text-muted-foreground">
                                   <Calendar className="h-4 w-4 mr-2" />
                                   {new Date(appointment.appointmentDate).toLocaleDateString()} at {appointment.appointmentTime}
                                 </div>
                               </div>
-                              <Badge className={getStatusColor(appointment.status)}>
-                                {appointment.status.charAt(0).toUpperCase() + appointment.status.slice(1)}
-                              </Badge>
+                              <StatusBadge status={appointment.status} />
                             </div>
                           </CardContent>
                         </Card>

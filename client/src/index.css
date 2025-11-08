@@ -323,11 +323,110 @@
     .no-print {
       display: none !important;
     }
-    
+
     .medical-card {
       @apply shadow-none border border-gray-300;
       break-inside: avoid;
     }
+  }
+
+  /* ========================================
+     DESIGN SYSTEM UTILITIES
+     Standardized spacing, layout, and component utilities
+     ======================================== */
+
+  /* Section Spacing */
+  .section-hero {
+    @apply py-20 lg:py-24;
+  }
+
+  .section-content {
+    @apply py-16;
+  }
+
+  .section-dashboard {
+    @apply py-8;
+  }
+
+  /* Container Utilities */
+  .container-wide {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .container-narrow {
+    @apply max-w-4xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Icon Containers */
+  .icon-container {
+    @apply p-3 rounded-full flex-shrink-0;
+  }
+
+  .icon-container-primary {
+    @apply icon-container bg-primary/10;
+  }
+
+  .icon-container-success {
+    @apply icon-container bg-[hsl(var(--success-green))]/10;
+  }
+
+  .icon-container-warning {
+    @apply icon-container bg-[hsl(var(--warning-yellow))]/10;
+  }
+
+  .icon-container-danger {
+    @apply icon-container bg-destructive/10;
+  }
+
+  .icon-container-info {
+    @apply icon-container bg-[hsl(var(--medical-blue))]/10;
+  }
+
+  /* Status Badges - Updated to use design tokens */
+  .status-scheduled {
+    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-sm font-medium;
+    background-color: hsl(var(--warning-yellow) / 0.1);
+    color: hsl(var(--warning-yellow));
+    border: 1px solid hsl(var(--warning-yellow) / 0.2);
+  }
+
+  .status-confirmed {
+    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-sm font-medium;
+    background-color: hsl(var(--primary) / 0.1);
+    color: hsl(var(--primary));
+    border: 1px solid hsl(var(--primary) / 0.2);
+  }
+
+  .status-completed {
+    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-sm font-medium;
+    background-color: hsl(var(--success-green) / 0.1);
+    color: hsl(var(--success-green));
+    border: 1px solid hsl(var(--success-green) / 0.2);
+  }
+
+  .status-cancelled {
+    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-sm font-medium;
+    background-color: hsl(var(--destructive) / 0.1);
+    color: hsl(var(--destructive));
+    border: 1px solid hsl(var(--destructive) / 0.2);
+  }
+
+  /* Interactive Card Utilities */
+  .card-interactive {
+    @apply hover:shadow-lg transition-shadow cursor-pointer;
+  }
+
+  /* Grid Utilities */
+  .grid-stats {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6;
+  }
+
+  .grid-features {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
+  }
+
+  .grid-two-col {
+    @apply grid grid-cols-1 lg:grid-cols-2 gap-12;
   }
 }
 
